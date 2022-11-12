@@ -22,6 +22,7 @@ var createButtonCount = 0;
 var forecastArr = [];
 let storage = 0;
 let history = [];
+let mainIcon = $("#currentIcon");
 
 //FUNCTIONS
 
@@ -73,11 +74,19 @@ function fetchCityWeather() {
     })
     .then(function (data) {
       console.log(data);
-      $("#cityName").text(data.name + " (" + date + ")");
+      let day = document.getElementById("cityName");
+      let thisIcon = data.weather[0].icon;
+      var createImg = document.createElement("img");
+      createImg.setAttribute(
+        "src",
+        "http://openweathermap.org/img/wn/" + thisIcon + ".png"
+      );
+      $("#cityName").text(data.name + " (" + date + ") ");
       $("#tempText").text("Temp: " + data.main.temp + "°F");
       $("#windText").text("Wind:  " + data.wind.speed + "MPH");
       $("#humidityText").text("Humidity: " + data.main.humidity + "%");
       var currentCity = data.name;
+      day.appendChild(createImg);
       createCityButton(currentCity);
     });
 }
@@ -124,11 +133,19 @@ function fetchCityWeatherFromHistory() {
       return response.json();
     })
     .then(function (data) {
-      console.log(data);
-      $("#cityName").text(data.name + " (" + date + ")");
+      let day = document.getElementById("cityName");
+      let thisIcon = data.weather[0].icon;
+      var createImg = document.createElement("img");
+      createImg.setAttribute(
+        "src",
+        "http://openweathermap.org/img/wn/" + thisIcon + ".png"
+      );
+      $("#cityName").text(data.name + " (" + date + ") ");
       $("#tempText").text("Temp: " + data.main.temp + "°F");
       $("#windText").text("Wind:  " + data.wind.speed + "MPH");
       $("#humidityText").text("Humidity: " + data.main.humidity + "%");
+      var currentCity = data.name;
+      day.appendChild(createImg);
     });
 }
 //this will be responsible from getting city cords from history button
@@ -153,7 +170,7 @@ function fetchCityCordsFromHistory(input) {
       fetchCityForecast();
     });
 }
-
+//this will featch for the next 5 days
 function fetchCityForecast() {
   forecastArr = [];
   fetch(
@@ -178,10 +195,9 @@ function fetchCityForecast() {
       appendForecastData();
     });
 }
-
+//this will append data to the 5 cards
 function appendForecastData() {
   for (let i = 0; i < forecastArr.length; i++) {
-    var nowcity = $("#cityName").text();
     var dayName = forecastArr[i].dt_txt;
     var icon = forecastArr[i].weather[0].icon;
     var temp = forecastArr[i].main.temp;
@@ -206,7 +222,7 @@ function appendForecastData() {
     day.appendChild(createli3);
   }
 }
-
+//this retrives and appends localstorage
 function getLocalStorage() {
   if (JSON.parse(localStorage.getItem("history")) !== null) {
     history = history.concat(JSON.parse(localStorage.getItem("history")));
@@ -226,7 +242,7 @@ function getLocalStorage() {
     document.getElementById("history").appendChild(newButton);
   }
 }
-
+//this runs the storage functions on page load
 getLocalStorage();
 //EVENT LISTENERS
 userForm.addEventListener("submit", handleFormSubmit);
