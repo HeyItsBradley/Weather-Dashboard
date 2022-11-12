@@ -245,6 +245,7 @@ function getLocalStorage() {
 //this runs the storage functions on page load
 getLocalStorage();
 //EVENT LISTENERS
+//this listeners for the search button
 userForm.addEventListener("submit", handleFormSubmit);
-
+//this handles previous searches buttons(uses jquery bc vanilla wont allow click handlers on ids that havnt been created yet)
 $(document).on("click", "#historyButton", handleHistorySubmit);
