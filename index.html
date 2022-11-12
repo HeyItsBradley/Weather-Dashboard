@@ -15,16 +15,19 @@
     <title>Weather Dashboard</title>
   </head>
   <body>
+    <!-- navbar -->
     <nav class="h1 bg-primary text-center h p-3">
       <div class="text-center container-fluid">
         <span class="text-light navbar-brand mb-0 h1">Weather Dashboard</span>
       </div>
     </nav>
+    <!-- line breaks -->
     <br />
     <br />
-
+    <!-- main Content -->
     <main class="container-fluid">
       <div class="row">
+        <!-- search city button and input -->
         <aside class="col-lg-2 m-3 border-bottom border-dark">
           <h2>Search for a City:</h2>
           <form id="formSubmit">
@@ -40,7 +43,8 @@
             <button type="submit" class="col-12 btn btn-primary">Search</button>
           </form>
         </aside>
-        <article class="col-lg-9 bg-light border border-dark p-3 m-3">
+        <!-- main card -->
+        <article class="col-lg-9 bg-secondary border border-dark p-3 m-3">
           <h2 id="cityName">Select City</h2>
           <ul>
             <li id="tempText" class="p-2">Temp:</li>
@@ -50,12 +54,45 @@
         </article>
       </div>
     </main>
-
+    <!-- start of bottom section -->
     <main class="container-fluid">
       <div class="row">
+        <!-- history column -->
         <aside id="history" class="col-lg-2 m-3">
           <h3>Recent Searches:</h3>
         </aside>
+        <!-- start of 5 day cards -->
+        <article class="col-lg-9 p-3 m-3">
+          <h3>5 Day Forecast:</h3>
+          <div class="container-fluid">
+            <div class="row">
+              <figure
+                id="Day-0"
+                class="weatherCard bg-secondary col-lg-2 p-3 m-3"
+              ></figure>
+
+              <figure
+                id="Day-1"
+                class="weatherCard bg-secondary col-lg-2 p-3 m-3"
+              ></figure>
+
+              <figure
+                id="Day-2"
+                class="weatherCard bg-secondary col-lg-2 p-3 m-3"
+              ></figure>
+
+              <figure
+                id="Day-3"
+                class="weatherCard bg-secondary col-lg-2 p-3 m-3"
+              ></figure>
+
+              <figure
+                id="Day-4"
+                class="weatherCard bg-secondary col-lg-2 p-3 m-3"
+              ></figure>
+            </div>
+          </div>
+        </article>
       </div>
     </main>
 

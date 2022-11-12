@@ -20,6 +20,8 @@ let year = getDate.getFullYear();
 let date = `${month}-${day}-${year}`;
 var createButtonCount = 0;
 var forecastArr = [];
+let storage = 0;
+let history = [];
 
 //FUNCTIONS
 
@@ -50,6 +52,7 @@ function fetchCityCords(city) {
 
       fetchCityWeather();
       fetchCityForecast();
+      storage++;
     });
 }
 
@@ -89,9 +92,11 @@ function createCityButton(currentCity) {
   createButton.textContent = currentCity;
 
   document.getElementById("history").appendChild(createButton);
+  history.push(currentCity);
   var storageName = currentCity;
   var storageContent = $("#historyButton");
-  localStorage.setItem(storageName, storageContent);
+
+  localStorage.setItem("history", JSON.stringify(history));
   console.log($("." + currentCity));
 
   createButtonCount++;
@@ -129,6 +134,7 @@ function fetchCityWeatherFromHistory() {
 //this will be responsible from getting city cords from history button
 function fetchCityCordsFromHistory(input) {
   console.log(input);
+
   var getCityCords =
     "http://api.openweathermap.org/geo/1.0/direct?q=" +
     input +
@@ -144,10 +150,12 @@ function fetchCityCordsFromHistory(input) {
       lon = data[0].lon;
 
       fetchCityWeatherFromHistory();
+      fetchCityForecast();
     });
 }
 
 function fetchCityForecast() {
+  forecastArr = [];
   fetch(
     getForcast +
       "lat=" +
@@ -162,10 +170,64 @@ function fetchCityForecast() {
       return response.json();
     })
     .then(function (data) {
-      console.log(data);
+      forecastArr.push(data.list[4]);
+      forecastArr.push(data.list[12]);
+      forecastArr.push(data.list[20]);
+      forecastArr.push(data.list[29]);
+      forecastArr.push(data.list[36]);
+      appendForecastData();
     });
 }
 
+function appendForecastData() {
+  for (let i = 0; i < forecastArr.length; i++) {
+    var nowcity = $("#cityName").text();
+    var dayName = forecastArr[i].dt_txt;
+    var icon = forecastArr[i].weather[0].icon;
+    var temp = forecastArr[i].main.temp;
+    var speed = forecastArr[i].wind.speed;
+    var humidity = forecastArr[i].main.humidity;
+    var day = document.getElementById("Day-" + [i]);
+    var createImg = document.createElement("img");
+    var createli = document.createElement("li");
+    var createli2 = document.createElement("li");
+    var createli3 = document.createElement("li");
+    createImg.setAttribute(
+      "src",
+      "http://openweathermap.org/img/wn/" + icon + ".png"
+    );
+    createli.textContent = "Temp: " + temp + "°F";
+    createli2.textContent = "Wind: " + speed + " MPH";
+    createli3.textContent = "Humidity : " + humidity + " %";
+    day.textContent = dayName;
+    day.appendChild(createImg);
+    day.appendChild(createli);
+    day.appendChild(createli2);
+    day.appendChild(createli3);
+  }
+}
+
+function getLocalStorage() {
+  if (JSON.parse(localStorage.getItem("history")) !== null) {
+    history = history.concat(JSON.parse(localStorage.getItem("history")));
+  }
+  // for (let i = 0; i < history.length; i++) {
+  //   cityButton = $("<button>");
+  //   cityButton.attr("class", );
+  console.log("functions is running");
+  for (let i = 0; i < history.length; i++) {
+    var newButton = document.createElement("button");
+
+    newButton.type = "submit";
+    newButton.setAttribute("class", history[i]);
+    newButton.className = "my-2 col-12 btn btn-primary " + history[i];
+    newButton.id = "historyButton";
+    newButton.textContent = history[i];
+    document.getElementById("history").appendChild(newButton);
+  }
+}
+
+getLocalStorage();
 //EVENT LISTENERS
 userForm.addEventListener("submit", handleFormSubmit);
 
