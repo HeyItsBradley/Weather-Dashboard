@@ -9,9 +9,9 @@ var lon = "";
 var apikey = "9a971c3220d79475f9be536dd4515f62";
 var apiKey2 = "f768e14492ff74a6238ecb011d8ddefc";
 var inputLatAndLong = "lat=" + lat + "&lon=" + lon + "&appid=" + apikey;
-var getWeather = "http://api.openweathermap.org/data/2.5/weather?";
+var getWeather = "https://api.openweathermap.org/data/2.5/weather?";
 
-var getForcast = "http://api.openweathermap.org/data/2.5/forecast?";
+var getForcast = "https://api.openweathermap.org/data/2.5/forecast?";
 const getDate = new Date();
 
 let day = getDate.getDate();
