@@ -38,7 +38,7 @@ function handleFormSubmit(e) {
 function fetchCityCords(city) {
   console.log(city);
   var getCityCords =
-    "http://api.openweathermap.org/geo/1.0/direct?q=" +
+    "https://api.openweathermap.org/geo/1.0/direct?q=" +
     city +
     "&appid=" +
     apikey;
@@ -79,7 +79,7 @@ function fetchCityWeather() {
       var createImg = document.createElement("img");
       createImg.setAttribute(
         "src",
-        "http://openweathermap.org/img/wn/" + thisIcon + ".png"
+        "https://openweathermap.org/img/wn/" + thisIcon + ".png"
       );
       $("#cityName").text(data.name + " (" + date + ") ");
       $("#tempText").text("Temp: " + data.main.temp + "°F");
@@ -138,7 +138,7 @@ function fetchCityWeatherFromHistory() {
       var createImg = document.createElement("img");
       createImg.setAttribute(
         "src",
-        "http://openweathermap.org/img/wn/" + thisIcon + ".png"
+        "https://openweathermap.org/img/wn/" + thisIcon + ".png"
       );
       $("#cityName").text(data.name + " (" + date + ") ");
       $("#tempText").text("Temp: " + data.main.temp + "°F");
@@ -153,7 +153,7 @@ function fetchCityCordsFromHistory(input) {
   console.log(input);
 
   var getCityCords =
-    "http://api.openweathermap.org/geo/1.0/direct?q=" +
+    "https://api.openweathermap.org/geo/1.0/direct?q=" +
     input +
     "&appid=" +
     apikey;
@@ -210,7 +210,7 @@ function appendForecastData() {
     var createli3 = document.createElement("li");
     createImg.setAttribute(
       "src",
-      "http://openweathermap.org/img/wn/" + icon + ".png"
+      "https://openweathermap.org/img/wn/" + icon + ".png"
     );
     createli.textContent = "Temp: " + temp + "°F";
     createli2.textContent = "Wind: " + speed + " MPH";
@@ -227,9 +227,7 @@ function getLocalStorage() {
   if (JSON.parse(localStorage.getItem("history")) !== null) {
     history = history.concat(JSON.parse(localStorage.getItem("history")));
   }
-  // for (let i = 0; i < history.length; i++) {
-  //   cityButton = $("<button>");
-  //   cityButton.attr("class", );
+
   console.log("functions is running");
   for (let i = 0; i < history.length; i++) {
     var newButton = document.createElement("button");
