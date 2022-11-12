@@ -18,6 +18,8 @@ let day = getDate.getDate();
 let month = getDate.getMonth() + 1;
 let year = getDate.getFullYear();
 let date = `${month}-${day}-${year}`;
+var createButtonCount = 0;
+var forecastArr = [];
 
 //FUNCTIONS
 
@@ -26,6 +28,7 @@ function handleFormSubmit(e) {
   e.preventDefault();
   var input = userInput.value;
   fetchCityCords(input);
+
   //make an api call with that search term and confirm data is send back
 }
 //functions is responsible for making api call with the user search term
@@ -46,6 +49,7 @@ function fetchCityCords(city) {
       lon = data[0].lon;
 
       fetchCityWeather();
+      fetchCityForecast();
     });
 }
 
@@ -59,7 +63,7 @@ function fetchCityWeather() {
       lon +
       "&appid=" +
       apiKey2 +
-      "&units=metric"
+      "&units=imperial"
   )
     .then(function (response) {
       return response.json();
@@ -77,14 +81,20 @@ function fetchCityWeather() {
 
 //this functions will make a new button
 function createCityButton(currentCity) {
-    if(getElementById("#history").c)
   var createButton = document.createElement("button");
-  createButton.className = "my-2 col-12 btn btn-primary";
   createButton.type = "submit";
+  createButton.setAttribute("class", currentCity);
+  createButton.className = "my-2 col-12 btn btn-primary " + currentCity;
   createButton.id = "historyButton";
   createButton.textContent = currentCity;
 
   document.getElementById("history").appendChild(createButton);
+  var storageName = currentCity;
+  var storageContent = $("#historyButton");
+  localStorage.setItem(storageName, storageContent);
+  console.log($("." + currentCity));
+
+  createButtonCount++;
 }
 //this will handle the history input
 function handleHistorySubmit(e) {
@@ -103,7 +113,7 @@ function fetchCityWeatherFromHistory() {
       lon +
       "&appid=" +
       apiKey2 +
-      "&units=metric"
+      "&units=imperial"
   )
     .then(function (response) {
       return response.json();
@@ -134,6 +144,25 @@ function fetchCityCordsFromHistory(input) {
       lon = data[0].lon;
 
       fetchCityWeatherFromHistory();
+    });
+}
+
+function fetchCityForecast() {
+  fetch(
+    getForcast +
+      "lat=" +
+      lat +
+      "&lon=" +
+      lon +
+      "&appid=" +
+      apiKey2 +
+      "&units=imperial"
+  )
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (data) {
+      console.log(data);
     });
 }
 
