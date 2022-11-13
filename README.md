@@ -14,7 +14,7 @@ To use this program, you can enter the name of a city that you would like to see
 
 https://heyitsbradley.github.io/Weather-Dashboard/
 
-![alt text](assets/images/screenshot.png)
+![alt text](./Assets/heyitsbradley.github.io_Weather-Dashboard_.png)
 
 ## Credits
 
